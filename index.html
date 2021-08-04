@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Chia team</title>
+
+</head>
+
+<body>
+	<div align="center"><h3>Chia team LOL</h3></div>
+	<div style="width: 80%; height: auto; display: flex;justify-content: center; margin: 0 auto; border: 0.5px solid black;border-radius: 15px;padding: 10px 0">
+		<div style="width: 45%">
+			<div style="margin: 10px"><input id="nhap_ten" type="text"> <input type="button" value="Thêm" onClick="them()"><input type="button" value="Xóa" onClick="xoa()"> <input type="button" onClick="xoa_het()" value="Xóa hết"></div>
+			<textarea rows="20" style="width: 80%" id="xuat_ten" disabled></textarea>
+		</div>
+		<div style="width: 50%">
+			<label>Số lượng thành viên 1 team:</label><br>
+			<input type="number" id="sl" min="1" max="5"><br>
+			<input type="button" onClick="chia()" value="Chia team">
+			<div id="hienthi" style="display: none">
+				Team 1:
+				<div id="group1">
+				
+				</div>
+				Team 2:
+				<div id="group2">
+				
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		var group = ["Hoàng Tạ","Tú Phạm","Bảo Nguyễn","Công Phan","Hiếu Nguyễn","Thịnh Trần","Minh Giang"];
+		//var group = [];
+		var sl ="";
+		var item = "";
+		var newLine = "\r\n";
+		var hien_thi = "";
+		group.forEach(function(item){
+			hien_thi += item + newLine;
+			document.getElementById("xuat_ten").innerHTML = hien_thi;
+		});
+		function toUpper(str) {
+		return str
+			.toLowerCase()
+			.split(' ')
+			.map(function(Word) {
+				return Word[0].toUpperCase() + Word.substr(1);
+			})
+			.join(' ');
+		 }
+		function them(){
+			var hien_thi = "";
+			item = toUpper(document.getElementById("nhap_ten").value);
+			var d = 0;
+			for (var i = 0; i< group.length; i++){
+				if (item == group[i]){
+					d++;
+				}
+			}
+			if (d == 0 ){
+				group.push(item);
+				console.log(group);
+				group.forEach(function(item){
+					hien_thi += item + newLine;
+					document.getElementById("xuat_ten").innerHTML = hien_thi;
+				});
+			}
+			else{
+				alert("Đã có tên này rôi");
+			}
+		}
+		function xoa(){
+			var hien_thi = "";
+			var dem = 0;
+			item = toUpper(document.getElementById("nhap_ten").value);
+			item = toUpper(document.getElementById("nhap_ten").value);
+			for (var i = 0; i< group.length; i++){
+				if (item == group[i]){
+					group.splice(i,i+1);
+					console.log(group);
+					dem++;
+				}
+			}
+			if (dem == 0){
+				alert("Không có tên trong danh sách!");
+			}
+			group.forEach(function(item){
+				hien_thi += item + newLine;
+				document.getElementById("xuat_ten").innerHTML = hien_thi;
+			});
+		}
+		function xoa_het(){
+			var hien_thi = ""
+			group.splice(0,group.length);
+			console.log(group);
+			document.getElementById("xuat_ten").innerHTML = hien_thi;
+		}
+		function chia(){
+			document.getElementById("hienthi").style.display = "block";
+			console.log(group);
+			sl = document.getElementById("sl").value;
+			if (sl==""){
+				alert("Chưa nhập số lượng kìa!");
+				document.getElementById("hienthi").style.display = "none";
+			}
+			else{
+				console.log(sl);
+				var swap = group.sort(func);
+				function func(a,b){
+					return 0.5 - Math.random();
+				}
+				var group1 = swap.slice(0,sl);
+				var group2 = swap.slice(sl);
+				console.log(swap);
+				console.log(group1);
+				document.getElementById("group1").innerText = group1;
+				document.getElementById("group2").innerText = group2;
+			}
+		}
+	</script>
+</body>
+</html>
